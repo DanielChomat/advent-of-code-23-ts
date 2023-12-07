@@ -6,7 +6,7 @@ const twoDimensionalArray: Array<string[]> = []
 const asteriskRegex = /\*/g;
 const numberRegex = /\d/g
 
-const getCharAtCoordConditions = ({xCoord, y}: {
+const getCharAtCoordProps = ({xCoord, y}: {
     xCoord: number,
     y: number
 }) => {
@@ -35,7 +35,7 @@ const getNumbersBefore = ({y, x}: { y: number; x: number }) => {
     const resultNumbers: StringNumberWithCoords[] = []
 
     for (let xCoord = startingIndex; xCoord >= 0; xCoord--) {
-        const {isAnotherDigit, charAtCoord} = getCharAtCoordConditions({xCoord, y})
+        const {isAnotherDigit, charAtCoord} = getCharAtCoordProps({xCoord, y})
 
         if (!isAnotherDigit) break;
 
@@ -51,7 +51,7 @@ const getNumbersAfter = ({y, x, maxXIndex}: { y: number; x: number; maxXIndex: n
     const resultNumbers: StringNumberWithCoords[] = []
 
     for (let xCoord = startingIndex; xCoord <= maxXIndex; xCoord++) {
-        const {isAnotherDigit, charAtCoord} = getCharAtCoordConditions({xCoord, y})
+        const {isAnotherDigit, charAtCoord} = getCharAtCoordProps({xCoord, y})
 
         if (!isAnotherDigit) break;
 
@@ -82,10 +82,12 @@ const transformTheInput = () => {
             const xIndexes = [startIndex - 1, startIndex, startIndex + 1].filter(xIndexFilterFunction)
             const yIndexes = [index - 1, index, index + 1].filter(yIndexFilterFunction);
 
+            // Set to help with handling duplicates
             const matchedNumbers: Set<string> = new Set()
 
             const yIndexMaxNumber = yIndexes[0] + yIndexes.length
             for (let y = yIndexes[0]; y < yIndexMaxNumber; y++) {
+
                 const xIndexMaxNumber = xIndexes[0] + xIndexes.length
                 for (let x = xIndexes[0]; x < xIndexMaxNumber; x++) {
                     // Skip the asterisk by itself
@@ -107,29 +109,34 @@ const transformTheInput = () => {
                             x: x
                         }
 
-                        const allDaNumbers: StringNumberWithCoords[] = [...numbersPrev, originalNumberObject, ...numbersNext]
+                        // All the digits (as an object) of the number in an array to join into a number
+                        const foundDigitsInObjectArray: StringNumberWithCoords[] = [...numbersPrev, originalNumberObject, ...numbersNext]
 
-                        const wholeNumber = +allDaNumbers.map(number => number.char).join('')
-                        const xCoords = allDaNumbers.map(number => number.x);
+                        // Creating the number from digits
+                        const joinedDigitsNumber = +foundDigitsInObjectArray.map(({char}) => char).join('')
+                        // Indexes of digits for duplicate handling
+                        const xCoords = foundDigitsInObjectArray.map(({x}) => x);
                         const xCoordsSorted = xCoords.toSorted((a, b) => a - b)
 
                         const wholeResultNumber: ResultNumberWithCoords = {
-                            number: wholeNumber,
+                            number: joinedDigitsNumber,
                             y,
-                            xCoords,
+                            xCoords: xCoordsSorted,
                         }
 
+                        // Thanks to JSON.stringify, we can handle the duplicates in the Set
                         matchedNumbers.add(JSON.stringify(wholeResultNumber))
                     }
                 }
             }
 
+            // Creating an array from the Set to use the array methods
             const uniqueMatchedNumbers: ResultNumberWithCoords[] = Array.from(matchedNumbers).map(item => JSON.parse(item));
 
             const hasExactlyTwoMatchedNumbers = uniqueMatchedNumbers.length === 2;
 
             if (hasExactlyTwoMatchedNumbers) {
-                const result = uniqueMatchedNumbers.reduce((acc, curr) => acc * curr.number, 1);
+                const result = uniqueMatchedNumbers.reduce((acc, {number}) => acc * number, 1);
 
                 values.push(result)
             }
