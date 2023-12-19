@@ -25,8 +25,12 @@ const findFirstAndLastDigit = (line: string): number => {
         console.log({curr})
         console.log({acc})
 
-        const add = acc === 0 ? 1 : 2;
-        const newAcc = acc * add;
+        const isFirstNumber = acc === 0;
+        if (isFirstNumber) {
+            return 1;
+        }
+
+        const newAcc = acc * 2;
 
         return newAcc;
     }, 0)
@@ -37,7 +41,6 @@ const findFirstAndLastDigit = (line: string): number => {
     }
 
     console.log({ multipliedNumber})
-
 
     return multipliedNumber;
 }

@@ -11,9 +11,10 @@
     "@types/line-reader": "^0.0.37",
     "@types/node": "^20.10.3",
     "ts-node": "^10.9.1",
-    "ts-node-dev": "^2.0.0"
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0"
   },
   "scripts": {
-    "start": "ts-node-dev --respawn ./src/04/p1/script.ts"
+    "start": "NODE_OPTIONS=--max-old-space-size=10000 ts-node-dev -r tsconfig-paths/register --transpile-only --respawn --poll ./src/05/p2/script.ts"
   }
 }
