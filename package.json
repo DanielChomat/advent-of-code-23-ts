@@ -15,6 +15,6 @@
     "tsconfig-paths": "^4.2.0"
   },
   "scripts": {
-    "start": "ts-node-dev --respawn ./src/05/p1/script.ts"
+    "start": "NODE_OPTIONS=--max-old-space-size=10000 ts-node-dev -r tsconfig-paths/register --transpile-only --respawn --poll ./src/05/p2/script.ts"
   }
 }
