@@ -127,7 +127,7 @@ const logTheResult = () => {
         return Math.min(lowestSeed, traversedNumber);
     }, Infinity)
 
-    console.log({result: seedWithLowestLocation})
+    console.log(seedWithLowestLocation)
 }
 
 lineReader.eachLine('./src/05/input.txt', function (line, last) {
