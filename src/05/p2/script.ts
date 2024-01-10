@@ -83,8 +83,8 @@ const saveTheIntervals = (line: string) => {
     const destinationStart = +numbersStringSplit[0]
     const length = +numbersStringSplit[2];
 
-    const indexOfTheMappingToInserInto = arrayToUseAsIndex.length - 1
-    const intervalsToPushInto = resultMapping[indexOfTheMappingToInserInto]?.intervals
+    const indexOfTheMappingToInsertInto = arrayToUseAsIndex.length - 1
+    const intervalsToPushInto = resultMapping[indexOfTheMappingToInsertInto]?.intervals
 
     intervalsToPushInto?.push({
         sourceStart,
@@ -165,7 +165,7 @@ const logTheResult = () => {
                 const destinationTraversedNumber = getDestinationTraversedNumber()
 
                 return destinationTraversedNumber;
-            }, lowestSeedLocation)
+            }, localLowestSeed)
 
 //            console.log({traversedNumber})
 
