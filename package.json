@@ -15,6 +15,6 @@
     "tsconfig-paths": "^4.2.0"
   },
   "scripts": {
-    "start": "ts-node-dev --respawn ./src/05/p1/script.ts"
+    "start": "ts-node-dev --respawn ./src/06/p2/script.ts"
   }
 }
