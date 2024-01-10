@@ -11,19 +11,17 @@ const findFirstAndLastDigit = (line: string): number => {
     const winningNumbersString = splitNumbers[0]
     const acquiredNumbersString = splitNumbers[1]
 
-    // TODO: Fix this empty array?
-    const winningNumbers = winningNumbersString.match(/\d+/g) ?? []
+    const winningNumbers = winningNumbersString.match(/\d+/g)
     const acquiredNumbers = new Set(acquiredNumbersString.match(/\d+/g))
 
+    if (!winningNumbers || !winningNumbers?.length) {
+        throw "No winning numbers found."
+    }
 
     const multipliedNumber = winningNumbers.reduce((acc, curr) => {
         const hasWinningNumber = acquiredNumbers.has(curr)
 
         if (!hasWinningNumber) return acc;
-
-        console.log({hasWinningNumber})
-        console.log({curr})
-        console.log({acc})
 
         const isFirstNumber = acc === 0;
         if (isFirstNumber) {
@@ -34,13 +32,6 @@ const findFirstAndLastDigit = (line: string): number => {
 
         return newAcc;
     }, 0)
-
-    if (multipliedNumber > 0) {
-        console.log({winningNumbers})
-        console.log({acquiredNumbers})
-    }
-
-    console.log({ multipliedNumber})
 
     return multipliedNumber;
 }
